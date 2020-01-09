@@ -2,14 +2,14 @@ const requestResourceButton = document.getElementById("requestResourceButton");
 requestResourceButton.addEventListener("click", mainRequest);
 
 let content = document.getElementById("contentContainer");
-let contain1 = document.createElement("h2");
-let contain2 = document.createElement("p");
-let contain3 = document.createElement("p");
-let contain4 = document.createElement("ul");
-content.appendChild(contain1);
-content.appendChild(contain2);
-content.appendChild(contain3);
-content.appendChild(contain4);
+let mainTitle = document.createElement("h2");
+let firstDesc = document.createElement("p");
+let secondDesc = document.createElement("p");
+let lastDesc = document.createElement("ul");
+content.appendChild(mainTitle);
+content.appendChild(firstDesc);
+content.appendChild(secondDesc);
+content.appendChild(lastDesc);
 
 function mainRequest() {
   let resourceType = document.getElementById("resourceType").value;
@@ -22,13 +22,13 @@ function mainRequest() {
         content.innerHTML = "No nothing";
       } else {
         let peopleObj = JSON.parse(this.responseText);
-        contain1.innerHTML = peopleObj.name;
-        contain2.innerHTML = peopleObj.gender;
+        mainTitle.innerHTML = peopleObj.name;
+        firstDesc.innerHTML = peopleObj.gender;
 
         let species = new XMLHttpRequest();
         species.addEventListener("load", function() {
           let speciesObj = JSON.parse(this.responseText);
-          contain3.innerHTML = speciesObj.name;
+          secondDesc.innerHTML = speciesObj.name;
         });
         species.open("GET", peopleObj.species.toString());
         species.send();
@@ -43,9 +43,9 @@ function mainRequest() {
         content.innerHTML = "No nothing";
       } else {
         let planetObj = JSON.parse(this.responseText);
-        contain1.innerHTML = planetObj.name;
-        contain2.innerHTML = planetObj.terrain;
-        contain3.innerHTML = planetObj.population;
+        mainTitle.innerHTML = planetObj.name;
+        firstDesc.innerHTML = planetObj.terrain;
+        secondDesc.innerHTML = planetObj.population;
 
         for (let i in planetObj.films) {
           let films = new XMLHttpRequest();
@@ -53,7 +53,7 @@ function mainRequest() {
             let filmsObj = JSON.parse(this.responseText);
             let listItem = document.createElement("li");
             listItem.innerHTML = filmsObj.title;
-            contain4.appendChild(listItem);
+            lastDesc.appendChild(listItem);
           });
           films.open("GET", planetObj.films[i]);
           films.send();
@@ -69,9 +69,9 @@ function mainRequest() {
         content.innerHTML = "No nothing";
       } else {
         let starshipObj = JSON.parse(this.responseText);
-        contain1.innerHTML = starshipObj.name;
-        contain2.innerHTML = starshipObj.manufacturer;
-        contain3.innerHTML = starshipObj.starship_class;
+        mainTitle.innerHTML = starshipObj.name;
+        firstDesc.innerHTML = starshipObj.manufacturer;
+        secondDesc.innerHTML = starshipObj.starship_class;
 
         for (let i in starshipObj.films) {
           let films = new XMLHttpRequest();
@@ -79,7 +79,7 @@ function mainRequest() {
             let filmsObj = JSON.parse(this.responseText);
             let listItem = document.createElement("li");
             listItem.innerHTML = filmsObj.title;
-            contain4.appendChild(listItem);
+            lastDesc.appendChild(listItem);
           });
           films.open("GET", starshipObj.films[i]);
           films.send();
